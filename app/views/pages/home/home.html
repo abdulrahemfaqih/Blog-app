@@ -22,7 +22,7 @@
 
 <body class="font-poppins">
    <!-- navbar -->
-   <nav x-data="{navOpen : false }" class="font-poppins py-6 sticky top-0 bg-white border-2 shadow-lg">
+   <nav x-data="{ navOpen: false, openMore: false }" class="font-poppins py-6 sticky top-0 bg-white border-2 shadow-lg">
       <div class="container mx-auto">
          <div class="flex justify-between items-center">
             <h1 class="text-3xl font-bold order-1 sm:order-2">Blogku</h1>
@@ -50,14 +50,27 @@
                <button class="btn">Sign</button>
                <button class="btn">Sign Up</button>
             </div>
+            <div class="order-4 relative hidden sm:block" x-data="{profileDs : false}">
+               <img @click="profileDs = !profileDs" src="../../../../public/src/img/profile-user/faqih.png"
+                  alt="profile"
+                  class="inline-block w-[40px] border-4 aspect-square border-black rounded-full overflow-hidden cursor-pointer">
+               <ul x-show="profileDs" x-transition:enter="transition ease-out duration-300"
+                  x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
+                  x-transition:leave-end="opacity-0 scale-90"
+                  class="absolute p-4 bg-white border-[3px] border-black rounded-lg right-[0px] top-[50px] flex flex-col gap-2">
+                  <li><a href="" class="text-base font-medium">Dashboard</a></li>
+                  <li><a href="" class="text-base font-bold text-red-600">Logout</a></li>
+               </ul>
+            </div>
          </div>
       </div>
       <div x-show="navOpen" x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
          x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-90" x-data="{open : false}"
+         x-transition:leave-end="opacity-0 scale-90"
          class="fixed bottom-3 right-5 left-5 p-4 border-[3.5px] rounded-[20px] bg-white border-black lg:hidden md:w-2/3 mx-auto">
-         <ul class="flex gap-7 justify-center sm:gap-14 md:gap-20">
+         <ul class="flex gap-7 justify-center items-center sm:gap-14 md:gap-20 relative">
             <li>
                <a href="" class="font-semibold hover:text-gray-500">Explore</a>
             </li>
@@ -68,12 +81,24 @@
                <a href="" class="font-semibold hover:text-gray-500">Service</a>
             </li>
             <li>
-               <button @click="open = !open" href="" class="font-semibold hover:text-gray-500">
+               <button @click="openMore = !openMore" class="font-semibold hover:text-gray-500">
                   More
                </button>
+               <div x-data="{ open: false }">
+                  <img @click="open = !open" src="../../../../public/src/img/profile-user/faqih.png" alt="profile"
+                     class="w-[35px] h-[35px] rounded-full">
+                  <ul x-show="open" x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-300"
+                     x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90"
+                     class="absolute bottom-[65px] right-[22%] flex gap-4 bg-white rounded-2xl border-2 border-black p-3 font-semibold">
+                     <li><a href="">Dashboard</a></li>
+                     <li><a href="" class="text-red-600 font-bold">Logout</a></li>
+                  </ul>
+               </div>
             </li>
          </ul>
-         <div x-show="open" x-transition:enter="transition ease-out duration-300"
+         <div x-show="openMore" x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-90"
@@ -87,23 +112,34 @@
 
    <!-- main section -->
    <section class="container">
-      <div class="py-10">
+      <div class="py-4">
          <!-- hero memes -->
          <div class="flex flex-col lg:flex-row rounded-lg border-2 shadow-lg my-5">
             <div class="flex-1">
-               <img src="../../../../public/src/img/programing.jpg" alt="" class="p-2 rounded-xl lg:w-[632px] lg:h-[375px]">
+               <img src="../../../../public/src/img/programing.jpg" alt=""
+                  class="p-2 rounded-xl lg:w-[632px] lg:h-[375px]">
             </div>
             <div class="px-5 lg:px-10 py-5 flex-1">
                <div class="mb-1 border-2 rounded-md border-black w-[120px] flex justify-center items-center">
                   <p class="font-medium text-[14px]">Programing</p>
                </div>
                <div class="my-5">
-                  <h1 class="font-bold text-2xl lg:text-3xl">Dasar Pemroraman dengan python - Percabangan if, elif dan else</h1>
-                  <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in! Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.</p>
+                  <h1 class="font-bold text-2xl lg:text-3xl">Dasar Pemroraman dengan python - Percabangan if, elif dan
+                     else</h1>
+                  <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur adipisicing
+                     elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in! Molestias qui fugit
+                     quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi ad repellendus,
+                     assumenda, provident hic incidunt officiis numquam deleniti minus asperiores inventore vel
+                     consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque beatae, molestiae
+                     quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel distinctio non in adipisci
+                     numquam et explicabo fugiat repudiandae exercitationem, similique dolorum assumenda quas
+                     consectetur porro laborum. Natus error consectetur similique maxime deserunt aut quibusdam. Eum at
+                     corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.</p>
                </div>
                <div class="flex gap-2 items-center">
                   <div>
-                     <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile" class="w-[40px] h-[40px] object-cover rounded-md">
+                     <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile"
+                        class="w-[35px] h-[35px] object-cover rounded-md">
                   </div>
                   <div>
                      <h3 class="font-bold text-[13px]">By: Abdul Rahem Faqih</h3>
@@ -115,11 +151,11 @@
          <!-- end hero memes -->
 
          <!-- list memes -->
-
          <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-10">
             <div class="rounded-lg border-2 shadow-lg my-5">
                <div class="flex-1">
-                  <img src="../../../../public/src/img/programing.jpg" alt="" class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
+                  <img src="../../../../public/src/img/programing.jpg" alt=""
+                     class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
                </div>
                <div class="px-5 py-5 flex-1">
                   <div class="mb-1 border-2 rounded-md border-black w-[120px] flex justify-center items-center">
@@ -127,11 +163,21 @@
                   </div>
                   <div class="my-5">
                      <h1 class="font-bold text-2xl">Dasar Pemroraman dengan python - Percabangan if, elif dan else</h1>
-                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in! Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.</p>
+                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in!
+                        Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi
+                        ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores
+                        inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque
+                        beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel
+                        distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique
+                        dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime
+                        deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.
+                     </p>
                   </div>
                   <div class="flex gap-2 items-center">
                      <div>
-                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile" class="w-[40px] h-[40px] object-cover rounded-md">
+                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile"
+                           class="w-[35px] h-[35px] object-cover rounded-md">
                      </div>
                      <div>
                         <h3 class="font-bold text-[13px]">By: Abdul Rahem Faqih</h3>
@@ -142,7 +188,8 @@
             </div>
             <div class="rounded-lg border-2 shadow-lg my-5">
                <div class="flex-1">
-                  <img src="../../../../public/src/img/programing.jpg" alt="" class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
+                  <img src="../../../../public/src/img/programing.jpg" alt=""
+                     class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
                </div>
                <div class="px-5 py-5 flex-1">
                   <div class="mb-1 border-2 rounded-md border-black w-[120px] flex justify-center items-center">
@@ -150,11 +197,21 @@
                   </div>
                   <div class="my-5">
                      <h1 class="font-bold text-2xl">Dasar Pemroraman dengan python - Percabangan if, elif dan else</h1>
-                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in! Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.</p>
+                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in!
+                        Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi
+                        ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores
+                        inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque
+                        beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel
+                        distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique
+                        dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime
+                        deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.
+                     </p>
                   </div>
                   <div class="flex gap-2 items-center">
                      <div>
-                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile" class="w-[40px] h-[40px] object-cover rounded-md">
+                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile"
+                           class="w-[35px] h-[35px] object-cover rounded-md">
                      </div>
                      <div>
                         <h3 class="font-bold text-[13px]">By: Abdul Rahem Faqih</h3>
@@ -165,7 +222,8 @@
             </div>
             <div class="rounded-lg border-2 shadow-lg my-5">
                <div class="flex-1">
-                  <img src="../../../../public/src/img/programing.jpg" alt="" class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
+                  <img src="../../../../public/src/img/programing.jpg" alt=""
+                     class="p-2 rounded-xl w-full h-[250px] lg:p-0 lg:rounded-t-md lg:rounded-b-none">
                </div>
                <div class="px-5 py-5 flex-1">
                   <div class="mb-1 border-2 rounded-md border-black w-[120px] flex justify-center items-center">
@@ -173,11 +231,21 @@
                   </div>
                   <div class="my-5">
                      <h1 class="font-bold text-2xl">Dasar Pemroraman dengan python - Percabangan if, elif dan else</h1>
-                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in! Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.</p>
+                     <p class="line-clamp-5 pt-2 text-sm leading-[22px]">Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Exercitationem expedita voluptates eum magnam delectus cum, eveniet in!
+                        Molestias qui fugit quas obcaecati ipsam, explicabo quae placeat laboriosam beatae autem. Modi
+                        ad repellendus, assumenda, provident hic incidunt officiis numquam deleniti minus asperiores
+                        inventore vel consectetur. Dolores reprehenderit non harum, placeat quia earum nihil, itaque
+                        beatae, molestiae quae illum rem quibusdam voluptatibus repellat? Magnam architecto vel
+                        distinctio non in adipisci numquam et explicabo fugiat repudiandae exercitationem, similique
+                        dolorum assumenda quas consectetur porro laborum. Natus error consectetur similique maxime
+                        deserunt aut quibusdam. Eum at corrupti quaerat accusantium impedit? Et ex a deleniti nesciunt.
+                     </p>
                   </div>
                   <div class="flex gap-2 items-center">
                      <div>
-                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile" class="w-[40px] h-[40px] object-cover rounded-md">
+                        <img src="../../../../public/src/img/profile-user/faqih.png" alt="profile"
+                           class="w-[35px] h-[35px] object-cover rounded-md">
                      </div>
                      <div>
                         <h3 class="font-bold text-[13px]">By: Abdul Rahem Faqih</h3>
@@ -193,6 +261,71 @@
    <!-- end main section -->
 
    <!-- category section -->
+   <div class="border-t-4"></div>
+   <div class="container my-10">
+      <div class="flex flex-wrap gap-4 justify-center items-center lg:max-w-xl lg:mx-auto">
+         <p class="border-2 shadow-md rounded-md p-2 text-base">programing</p>
+         <p class="border-2 shadow-md rounded-md p-2 text-base">programing</p>
+         <p class="border-2 shadow-md rounded-md p-2 text-base">programing</p>
+         <p class="border-2 shadow-md rounded-md p-2 text-base">programing</p>
+         <p class="border-2 shadow-md rounded-md p-2 text-base">programing</p>
+      </div>
+   </div>
+   <div class="border-b-4"></div>
+   <!-- end category section -->
+
+   <!-- social section -->
+   <section class="container my-16">
+      <div class="flex justify-center items-center gap-6 lg:gap-14">
+         <img src="../../../../public/src/img/icons/instagram.svg" alt="sosmed">
+         <img src="../../../../public/src/img/icons/youtube.svg" alt="sosmed">
+         <img src="../../../../public/src/img/icons/github.svg" alt="sosmed">
+         <img src="../../../../public/src/img/icons/twitter.svg" alt="sosmed">
+         <img src="../../../../public/src/img/icons/linkedin.svg" alt="sosmed">
+      </div>
+   </section>
+   <!-- end social section -->
+
+   <!-- footer -->
+   <footer class="container flex justify-between flex-wrap gap-12 lg:justify-around mb-20">
+      <div class="leading-[30px]">
+         <h1 class="font-bold text-[19px] mb-2">Categories</h1>
+         <p>category 1</p>
+         <p>category 2</p>
+         <p>category 3</p>
+         <p>category 4</p>
+         <p>category 5</p>
+      </div>
+      <div class="leading-[30px]">
+         <h1 class="font-bold text-[19px] mb-2">Support</h1>
+         <p>Online Supports</p>
+         <p>Call Numbers</p>
+         <p>Email</p>
+         <p>Social Supports</p>
+         <p>Location</p>
+      </div>
+      <div class="leading-[30px]">
+         <h1 class="font-bold text-[19px] mb-2">Blog</h1>
+         <p>Popular</p>
+         <p>Recent</p>
+         <p>Categories</p>
+      </div>
+      <div class="leading-[30px]">
+         <h1 class="font-bold text-[19px] mb-2">Permalinks</h1>
+         <p>Explore Memes</p>
+         <p>About</p>
+         <p>Service</p>
+         <p>Sign In</p>
+      </div>
+   </footer>
+   <!-- end footer -->
+
+   <!-- watermark -->
+   <div class="border-t-4 border-slate-800">
+      <div class="container flex justify-center p-5">
+         <p class="text-center font-medium">All Rights Reserved &copy; Copyright, Abdul Rahem Faqih</p>
+      </div>
+   </div>
 </body>
 
 </html>
